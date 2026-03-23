@@ -16,7 +16,7 @@ RAG is a technique that enhances LLM responses by retrieving relevant context fr
 
 | Layer | Tool |
 |---|---|
-| LLM | OpenAI GPT-5.4 (Anthropic Claude via env toggle) |
+| LLM | OpenAI GPT-4o (Anthropic Claude via env toggle) |
 | Embeddings | OpenAI text-embedding-3-small |
 | Vector Store | Chroma (local) |
 | Framework | LlamaIndex |
