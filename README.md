@@ -145,7 +145,7 @@ This repo is the foundation for [agentic-rag](https://github.com/tohio/agentic-r
 ![alt text](docs/image.png)
 
 
-![alt text](image-2.png)
+![alt text](docs/image-2.png)
 
 
 ![alt text](docs/image-1.png)
