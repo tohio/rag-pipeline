@@ -53,6 +53,7 @@ rag-pipeline/
 ├── tests/
 │   └── test_pipeline.py
 ├── .env.sample
+├── pytest.ini
 ├── requirements.txt
 ├── Dockerfile
 └── README.md
