@@ -59,7 +59,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Default path for the evaluation Q&A dataset
-DEFAULT_QA_PATH = "evaluation/qa_pairs.json"
+DEFAULT_QA_PATH = "data/raw/qa_pairs.json"
 DEFAULT_DOCS_PATH = "data/raw"
 
 
@@ -154,7 +154,7 @@ def load_qa_pairs(qa_path: str) -> list[dict]:
         )
 
     with open(path, "r") as f:
-        pairs = json.load(f)
+        data = json.load(f)
         pairs = data["pairs"]
 
     logger.info(f"Loaded {len(pairs)} Q&A pairs from {qa_path}")
