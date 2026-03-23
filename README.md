@@ -139,3 +139,13 @@ This project is intentionally scoped for demonstration. In a production system:
 ## Related Project
 
 This repo is the foundation for [agentic-rag](https://github.com/tohio/agentic-rag), which extends this pipeline with tool use, query routing, multi-step reasoning, and agent memory.
+
+
+
+![alt text](docs/image.png)
+
+
+![alt text](image-2.png)
+
+
+![alt text](docs/image-1.png)

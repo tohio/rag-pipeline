@@ -89,26 +89,17 @@ def format_sources(sources: list[dict]) -> str:
 
 def chat(
     message: str,
-    history: list[list[str]],
+    history: list,
     show_sources: bool,
-) -> tuple[list[list[str]], str]:
-    """
-    Handle a chat message through the RAG pipeline.
+) -> tuple[list, str]:
 
-    Args:
-        message (str): User's question.
-        history (list): Gradio chat history.
-        show_sources (bool): Whether to display source citations.
-
-    Returns:
-        Tuple of (updated history, sources markdown string).
-    """
     if not message or not message.strip():
         return history, ""
 
     if not PIPELINE_READY:
         error_msg = f"Pipeline failed to initialize: {INIT_ERROR}"
-        history.append([message, error_msg])
+        history.append({"role": "user", "content": message})
+        history.append({"role": "assistant", "content": error_msg})
         return history, ""
 
     try:
@@ -116,13 +107,15 @@ def chat(
         answer = response["answer"]
         sources_md = format_sources(response["sources"]) if show_sources else ""
 
-        history.append([message, answer])
+        history.append({"role": "user", "content": message})
+        history.append({"role": "assistant", "content": answer})
         return history, sources_md
 
     except Exception as e:
         logger.error(f"Query error: {e}")
         error_msg = "An error occurred while processing your question. Please try again."
-        history.append([message, error_msg])
+        history.append({"role": "user", "content": message})
+        history.append({"role": "assistant", "content": error_msg})
         return history, ""
 
 
@@ -176,7 +169,6 @@ def compare_with_without_rag(question: str) -> tuple[str, str]:
 # -------------------------------------------------------------------
 with gr.Blocks(
     title="Meridian Capital Group — HR Assistant",
-    theme=gr.themes.Soft(),
 ) as demo:
 
     gr.Markdown(
@@ -218,8 +210,8 @@ with gr.Blocks(
                 with gr.Column(scale=1):
                     sources_display = gr.Markdown(
                         label="Sources",
-                        value="_Sources will appear here after your first question._",
-                    )
+                        value="",
+                )
 
             gr.Examples(
                 examples=EXAMPLE_QUESTIONS,
@@ -335,7 +327,7 @@ with gr.Blocks(
                 Redis for session memory, and LangSmith for observability.
 
                 ### Source Code
-                [github.com/yourusername/rag-pipeline](https://github.com/yourusername/rag-pipeline)
+                [github.com/tohio/rag-pipeline](https://github.com/tohio/rag-pipeline)
                 """
             )
 
@@ -345,6 +337,6 @@ with gr.Blocks(
 if __name__ == "__main__":
     demo.launch(
         server_name="0.0.0.0",
-        server_port=int(os.getenv("GRADIO_PORT", 7860)),
-        share=False,
-    )
+        server_port=7860,
+        theme=gr.themes.Soft(),
+)
