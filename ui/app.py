@@ -22,6 +22,8 @@ Usage:
 import logging
 import os
 import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import gradio as gr
 from dotenv import load_dotenv

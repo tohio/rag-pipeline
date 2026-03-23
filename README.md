@@ -16,7 +16,7 @@ RAG is a technique that enhances LLM responses by retrieving relevant context fr
 
 | Layer | Tool |
 |---|---|
-| LLM | OpenAI GPT-4o (Anthropic Claude via env toggle) |
+| LLM | OpenAI GPT-5.4 (Anthropic Claude via env toggle) |
 | Embeddings | OpenAI text-embedding-3-small |
 | Vector Store | Chroma (local) |
 | Framework | LlamaIndex |
@@ -102,6 +102,53 @@ python src/pipeline.py
 python ui/app.py
 ```
 
+The UI will be available at `http://localhost:7860` in your browser. To expose a public shareable link, set `share=True` in `demo.launch()` inside `ui/app.py` — Gradio will print a public URL to the terminal.
+
+**Run evaluation**
+
+```bash
+python evaluation/eval.py --qa evaluation/qa_pairs.json --output evaluation/results.json
+```
+
+**Run with Docker**
+
+```bash
+docker build -t rag-pipeline .
+docker run --env-file .env -p 7860:7860 rag-pipeline
+```
+
+The UI will be available at `http://localhost:7860`. Pass your API keys via the `.env` file — do not bake them into the image.
+
+**Run tests**
+
+```bash
+pytest tests/test_pipeline.py
+```
+
+---
+
+## Screenshots
+
+**CLI — pipeline query with source citation**
+
+![CLI](docs/screenshots/cli-query.png)
+
+> Query: *"How many PTO days does a new employee get?"*
+> Retrieved 1 chunk from `meridian-capital-handbook.pdf` (Page 3, score 0.3934) and generated a grounded answer.
+
+**Gradio UI — Ask HR tab**
+
+![Ask HR](docs/screenshots/ui-ask-hr.png)
+
+> Query: *"What are the steps in the disciplinary process?"*
+> Answer grounded in Page 11 of the handbook with source citation displayed in the panel.
+
+**Gradio UI — RAG vs No RAG tab**
+
+![RAG vs No RAG](docs/screenshots/ui-rag-comparison.png)
+
+> Same question asked with and without retrieval. Without RAG the model acknowledges it has no knowledge of Meridian Capital Group's policies. With RAG it returns the exact answer from the handbook.
+
 ---
 
 ## Key Design Decisions
@@ -139,13 +186,3 @@ This project is intentionally scoped for demonstration. In a production system:
 ## Related Project
 
 This repo is the foundation for [agentic-rag](https://github.com/tohio/agentic-rag), which extends this pipeline with tool use, query routing, multi-step reasoning, and agent memory.
-
-
-
-![alt text](docs/image.png)
-
-
-![alt text](docs/image-2.png)
-
-
-![alt text](docs/image-1.png)
