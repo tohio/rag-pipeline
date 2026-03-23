@@ -35,14 +35,15 @@ Usage:
     python src/pipeline.py --docs data/raw/meridian-capital-handbook.pdf
 """
 
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 import argparse
 import logging
 import os
-import sys
 from typing import Optional
-
 from dotenv import load_dotenv
-
 from src.ingestion.loader import load_documents
 from src.ingestion.chunker import chunk_documents
 from src.embedding.embedder import get_embed_model, embed_nodes
@@ -50,9 +51,8 @@ from src.vectorstore.store import get_vector_store
 from src.retrieval.retriever import get_retriever, retrieve, format_retrieved_context
 from src.generation.generator import get_llm, generate, build_response
 
-
-from pathlib import Path
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+# Load environment variables
+load_dotenv()
 
 # Load environment variables
 load_dotenv()
