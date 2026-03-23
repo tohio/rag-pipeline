@@ -155,6 +155,7 @@ def load_qa_pairs(qa_path: str) -> list[dict]:
 
     with open(path, "r") as f:
         pairs = json.load(f)
+        pairs = data["pairs"]
 
     logger.info(f"Loaded {len(pairs)} Q&A pairs from {qa_path}")
     return pairs

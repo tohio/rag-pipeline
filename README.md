@@ -108,14 +108,14 @@ The UI will be available at `http://localhost:7860` in your browser. To expose a
 **Run evaluation**
 
 ```bash
-python evaluation/eval.py --qa evaluation/qa_pairs.json --output evaluation/results.json
+python evaluation/eval.py --qa data/raw/qa_pairs.json --output evaluation/results.json
 ```
 
 **Run with Docker**
 
 ```bash
 docker build -t rag-pipeline .
-docker run --env-file .env -p 7860:7860 rag-pipeline
+docker run --env-file .env -v $(pwd)/data:/app/data -p 7860:7860 rag-pipeline python ui/app.py
 ```
 
 The UI will be available at `http://localhost:7860`. Pass your API keys via the `.env` file — do not bake them into the image.
