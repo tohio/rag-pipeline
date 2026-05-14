@@ -8,7 +8,7 @@ A modular Retrieval-Augmented Generation (RAG) pipeline built for clarity, exten
 
 RAG is a technique that enhances LLM responses by retrieving relevant context from a knowledge base before generating an answer. Rather than relying solely on the model's training data, the pipeline fetches the most relevant document chunks at query time and passes them as context to the LLM.
 
-![Architecture](docs/rag-pipeline-architecture.svg)
+![Architecture](docs/rag-pipeline-architecture.png)
 
 ---
 
